@@ -1,6 +1,13 @@
 var humanScore = 0;
 var computerScore = 0;
+const btnR = document.querySelector("#R");
+const btnP = document.querySelector("#P");
+const btnS = document.querySelector("#S");
+const results = document.querySelector("div");
 
+btnR.addEventListener("click",()=>playRound("rock",getComputerChoice()));
+btnP.addEventListener("click",()=>playRound("paper",getComputerChoice()));
+btnS.addEventListener("click",()=>playRound("scissors",getComputerChoice()));
 function getComputerChoice(){
   let num = Math.random();
   switch(true){
@@ -14,50 +21,58 @@ function getComputerChoice(){
       return null;
   }
 }
-function getHumanChoice(){
-  var a = prompt("choose");
-  if (a.toLowerCase() == "rock" || a.toLowerCase() == "paper" || a.toLowerCase() == "scissors"){
-    return a.toLowerCase();
-  } else{
-    console.log("pick a valid object idiot, or type it undercase");
-    getHumanChoice();
-  }
-}
 
 function playRound(humanChoice, computerChoice){
-  
+  const score = document.createElement("div");
+  switch(true){
+    case humanScore ==5:
+      score.textContent = "Game over, you win";
+      results.append(score);
+      return;
+    case computerScore ==5:
+      score.textContent = "Game over, you lose";
+      results.append(score);
+      return;
+  } 
+
   switch(true){
     case humanChoice=="rock"&&computerChoice=="paper":
-      console.log("You lose. Paper beats rock");
       computerScore++;
+      score.textContent = "You lose. Paper beats rock |" + humanScore + " "+ computerScore; 
+      results.append(score);
       return;
     case humanChoice == "rock" && computerChoice == "scissors":
-      console.log("You win. rock beats scissors");
+
       humanScore++;
+      score.textContent = "You win. rock beats scissors |" + humanScore + " "+ computerScore; 
+      results.append(score);
       return;
     case humanChoice == "paper" && computerChoice == "scissors":
-      console.log("You lose. scissors beats paper");
       computerScore++;
+      score.textContent = "You lose. scissors beats paper |" + humanScore + " "+ computerScore; 
+      results.append(score);
       return;
     case humanChoice == "paper" && computerChoice == "rock":
-      console.log("You win. Paper beats rock");
       humanScore++;
+      score.textContent = "You win. Paper beats rock |" + humanScore + " "+ computerScore; 
+      results.append(score);
       return;
     case humanChoice == "scissors" && computerChoice == "rock":
-      console.log("You lose. scissors beats rock");
       computerScore++;
+      score.textContent = "You lose. scissors beats rock |" + humanScore + " "+ computerScore; 
+      results.append(score);
       return;
     case humanChoice == "scissors" && computerChoice == "paper":
-      console.log("You win. scissors beats paper");
       humanScore++;
+      score.textContent = "You win. scissors beats paper |" + humanScore + " "+ computerScore; 
+      results.append(score);
       return;
     default:
-      console.log("tie");
+      score.textContent = "TIE!";
+      results.append(score);
   }
 }
 
-for(i = 0;i<5;i++){
-  playRound(getHumanChoice(),getComputerChoice());
-}
-console.log("You: "+humanScore + "\nComputer: "+computerScore);
+
+
 
